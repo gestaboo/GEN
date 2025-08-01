@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, send_file
 from docx import Document
 import io
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 
@@ -33,4 +34,5 @@ def generate():
     return send_file(output_stream, as_attachment=True, download_name=filename)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
