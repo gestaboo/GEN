@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>發電機測試表單</title>
+</head>
+<body>
+    <h1>發電機測試表單</h1>
+    <form method="post" action="/generate">
+        機房：<input type="text" name="room"><br><br>
+        kW：<input type="text" name="kw"><br><br>
+        開機原因：
+        <select name="reason">
+            <option value="定期測試">定期測試</option>
+            <option value="市電停電">市電停電</option>
+            <option value="本機房設備故障">本機房設備故障</option>
+            <option value="其他">其他</option>
+        </select><br><br>
+        <input type="submit" value="產生 Word 檔">
+    </form>
+</body>
+</html>
