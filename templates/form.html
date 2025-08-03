@@ -29,7 +29,12 @@
     <label>本次運轉時數（例如：2小時30分鐘）：<input type="text" name="hours_minutes"></label>
 
     <label>潤滑油面(目視)：<input type="text" name="oil_level"></label>
-    <label>是否漏油漏水(目視)：<input type="text" name="leak"></label>
+    <label>是否漏油漏水(目視)：
+      <select name="leak">
+      <option>有</option>
+        <option>無</option>
+      </select>
+    </label>
     <label>日用油箱容量（公升）：<input type="text" name="daily_tank"></label>
     <label>地下油槽(測試前量高度)：<input type="text" name="underground_before"></label>
     <label>地下油槽(測試後量高度)：<input type="text" name="underground_after"></label>
@@ -135,6 +140,7 @@
   </form>
 </body>
 </html>
+
 
 
 
