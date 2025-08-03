@@ -93,7 +93,6 @@
       min-height: 48px;
     }
     
-    /* 手機輸入優化 */
     input:focus,
     select:focus {
       border-color: var(--secondary);
@@ -101,12 +100,10 @@
       box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
     }
     
-    /* 數字輸入專用 */
     input[type="number"] {
       inputmode: decimal;
     }
     
-    /* 下拉選單樣式 */
     select {
       background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c3e50'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
       background-repeat: no-repeat;
@@ -153,22 +150,6 @@
       transform: scale(0.98);
     }
     
-    /* 手機橫屏適應 */
-    @media screen and (min-width: 500px) {
-      .form-section {
-        margin: 15px auto;
-        max-width: 500px;
-      }
-    }
-    
-    /* 避免iOS縮放 */
-    @media screen and (max-width: 360px) {
-      input, select {
-        font-size: 16px !important;
-      }
-    }
-    
-    /* 分組樣式 */
     .form-row {
       display: flex;
       gap: 10px;
@@ -176,6 +157,12 @@
     
     .form-row .form-group {
       flex: 1;
+    }
+    
+    @media screen and (max-width: 360px) {
+      input, select {
+        font-size: 16px !important;
+      }
     }
   </style>
 </head>
@@ -191,13 +178,13 @@
         <h2>基本資訊</h2>
         <div class="form-group">
           <label for="room">機房名稱</label>
-          <input type="text" id="room" name="room" required placeholder="請輸入機房名稱">
+          <input type="text" id="room" name="room" required>
         </div>
         
         <div class="form-row">
           <div class="form-group">
             <label for="kw">發電機功率 (kW)</label>
-            <input type="number" id="kw" name="kw" step="0.1" required placeholder="55.5" inputmode="decimal">
+            <input type="number" id="kw" name="kw" step="0.1" required>
           </div>
           
           <div class="form-group">
@@ -215,28 +202,28 @@
         <div class="form-row">
           <div class="form-group">
             <label for="time_range">測試時間</label>
-            <input type="text" id="time_range" name="time_range" required placeholder="08:00~08:30">
+            <input type="text" id="time_range" name="time_range" required>
           </div>
           
           <div class="form-group">
             <label for="hours_minutes">運轉時數</label>
-            <input type="text" id="hours_minutes" name="hours_minutes" required placeholder="2小時30分鐘">
+            <input type="text" id="hours_minutes" name="hours_minutes" required>
           </div>
         </div>
       </div>
       
-      <!-- 檢查項目 -->
+      <!-- 開機前檢查 -->
       <div class="form-section">
-        <h2>基本檢查</h2>
+        <h2>開機前檢查</h2>
         
         <div class="form-row">
           <div class="form-group">
-            <label for="oil_level">潤滑油面</label>
-            <input type="text" id="oil_level" name="oil_level" placeholder="目視檢查">
+            <label for="oil_level">潤滑油面(目視)</label>
+            <input type="text" id="oil_level" name="oil_level">
           </div>
           
           <div class="form-group">
-            <label for="leak">漏油漏水</label>
+            <label for="leak">是否漏油漏水(目視)</label>
             <select id="leak" name="leak">
               <option>無</option>
               <option>有</option>
@@ -246,17 +233,137 @@
         
         <div class="form-row">
           <div class="form-group">
-            <label for="daily_tank">日用油箱 (公升)</label>
-            <input type="number" id="daily_tank" name="daily_tank" placeholder="36">
+            <label for="daily_tank">日用油箱容量（公升）</label>
+            <input type="number" id="daily_tank" name="daily_tank">
           </div>
           
           <div class="form-group">
-            <label for="radiator">散熱器水位</label>
-            <input type="text" id="radiator" name="radiator" placeholder="正常">
+            <label for="underground_before">地下油槽(測試前量高度)</label>
+            <input type="number" id="underground_before" name="underground_before">
           </div>
         </div>
         
-        <!-- 更多檢查項目... -->
+        <div class="form-group">
+          <label for="underground_after">地下油槽(測試後量高度)</label>
+          <input type="number" id="underground_after" name="underground_after">
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="radiator">散熱器水位</label>
+            <input type="text" id="radiator" name="radiator">
+          </div>
+          
+          <div class="form-group">
+            <label for="expansion_tank">膨脹水箱</label>
+            <input type="text" id="expansion_tank" name="expansion_tank">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="Float_voltage">浮充電壓</label>
+            <input type="number" id="Float_voltage" name="Float_voltage" step="0.1">
+          </div>
+          
+          <div class="form-group">
+            <label for="Float_ampere">浮充電流</label>
+            <input type="number" id="Float_ampere" name="Float_ampere" step="0.1">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="alarm">警報及指示燈</label>
+            <input type="text" id="alarm" name="alarm">
+          </div>
+          
+          <div class="form-group">
+            <label for="belt">傳動皮帶檢查</label>
+            <input type="text" id="belt" name="belt">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="clutter">四週及基礎台有無雜物</label>
+          <select id="clutter" name="clutter">
+            <option>無</option>
+            <option>有</option>
+          </select>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="battery_clean">電池外表是否清潔</label>
+            <select id="battery_clean" name="battery_clean">
+              <option>是</option>
+              <option>否</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="battery_loose">電池接頭是否鬆動</label>
+            <select id="battery_loose" name="battery_loose">
+              <option>無</option>
+              <option>有</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="acid_ah">鉛酸電池（AH）</label>
+            <input type="number" id="acid_ah" name="acid_ah">
+          </div>
+          
+          <div class="form-group">
+            <label for="acid_units">鉛酸電池組數</label>
+            <input type="number" id="acid_units" name="acid_units">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="sealed_voltage">免加水電池組電壓（VDC）</label>
+          <input type="number" id="sealed_voltage" name="sealed_voltage" step="0.1">
+        </div>
+        
+        <h3>電池電壓 VDC</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="vdc1">1</label>
+            <input type="number" id="vdc1" name="vdc1" step="0.1">
+          </div>
+          
+          <div class="form-group">
+            <label for="vdc2">2</label>
+            <input type="number" id="vdc2" name="vdc2" step="0.1">
+          </div>
+          
+          <div class="form-group">
+            <label for="vdc3">3</label>
+            <input type="number" id="vdc3" name="vdc3" step="0.1">
+          </div>
+          
+          <div class="form-group">
+            <label for="vdc4">4</label>
+            <input type="number" id="vdc4" name="vdc4" step="0.1">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="starter_ok">油機啟動是否良好</label>
+            <select id="starter_ok" name="starter_ok">
+              <option>是</option>
+              <option>否</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="exhaust_color">煙囪排氣顏色</label>
+            <input type="text" id="exhaust_color" name="exhaust_color">
+          </div>
+        </div>
       </div>
       
       <!-- 空載數據 -->
@@ -268,75 +375,263 @@
           <div class="form-row">
             <div class="form-group">
               <label for="no_load_time">紀錄時間</label>
-              <input type="text" id="no_load_time" name="no_load_time" placeholder="08:30">
+              <input type="text" id="no_load_time" name="no_load_time">
             </div>
             
             <div class="form-group">
               <label for="no_load_rpm">轉速 (rpm)</label>
-              <input type="number" id="no_load_rpm" name="no_load_rpm" placeholder="1800">
+              <input type="number" id="no_load_rpm" name="no_load_rpm">
             </div>
           </div>
           
           <div class="form-row">
             <div class="form-group">
               <label for="no_load_hz">頻率 (Hz)</label>
-              <input type="number" id="no_load_hz" name="no_load_hz" placeholder="60">
+              <input type="number" id="no_load_hz" name="no_load_hz">
             </div>
             
             <div class="form-group">
               <label for="no_load_kw">功率 (kW)</label>
-              <input type="number" id="no_load_kw" name="no_load_kw" step="0.1" placeholder="5.5">
+              <input type="number" id="no_load_kw" name="no_load_kw" step="0.1">
             </div>
           </div>
           
-          <!-- 電壓電流數據... -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="no_load_voltage_rs">電壓 RS (V)</label>
+              <input type="number" id="no_load_voltage_rs" name="no_load_voltage_rs" step="0.1">
+            </div>
+            
+            <div class="form-group">
+              <label for="no_load_voltage_st">電壓 ST (V)</label>
+              <input type="number" id="no_load_voltage_st" name="no_load_voltage_st" step="0.1">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="no_load_voltage_tr">電壓 TR (V)</label>
+              <input type="number" id="no_load_voltage_tr" name="no_load_voltage_tr" step="0.1">
+            </div>
+            
+            <div class="form-group">
+              <label for="no_load_current_r">電流 R (A)</label>
+              <input type="number" id="no_load_current_r" name="no_load_current_r" step="0.1">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="no_load_current_s">電流 S (A)</label>
+              <input type="number" id="no_load_current_s" name="no_load_current_s" step="0.1">
+            </div>
+            
+            <div class="form-group">
+              <label for="no_load_current_t">電流 T (A)</label>
+              <input type="number" id="no_load_current_t" name="no_load_current_t" step="0.1">
+            </div>
+          </div>
         </fieldset>
       </div>
       
       <!-- 加載數據 (5組) -->
       <div class="form-section">
-        <h2>加載數據</h2>
+        <h2>加載數據（共5組）</h2>
         {% for i in range(1,6) %}
         <fieldset>
-          <legend>第 {{ i }} 組數據</legend>
+          <legend>第 {{ i }} 組</legend>
           
           <div class="form-row">
             <div class="form-group">
               <label for="load_time_{{ i }}">紀錄時間</label>
-              <input type="text" id="load_time_{{ i }}" name="load_time_{{ i }}" placeholder="09:00">
+              <input type="text" id="load_time_{{ i }}" name="load_time_{{ i }}">
             </div>
             
             <div class="form-group">
               <label for="load_rpm_{{ i }}">轉速 (rpm)</label>
-              <input type="number" id="load_rpm_{{ i }}" name="load_rpm_{{ i }}" placeholder="1800">
+              <input type="number" id="load_rpm_{{ i }}" name="load_rpm_{{ i }}">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="load_hz_{{ i }}">頻率 (Hz)</label>
+              <input type="number" id="load_hz_{{ i }}" name="load_hz_{{ i }}">
+            </div>
+            
+            <div class="form-group">
+              <label for="load_kw_{{ i }}">功率 (kW)</label>
+              <input type="number" id="load_kw_{{ i }}" name="load_kw_{{ i }}" step="0.1">
             </div>
           </div>
           
           <div class="form-row">
             <div class="form-group">
               <label for="load_voltage_rs_{{ i }}">電壓 RS (V)</label>
-              <input type="number" id="load_voltage_rs_{{ i }}" name="load_voltage_rs_{{ i }}" step="0.1" placeholder="220.0">
+              <input type="number" id="load_voltage_rs_{{ i }}" name="load_voltage_rs_{{ i }}" step="0.1">
             </div>
             
             <div class="form-group">
-              <label for="load_voltage_tr_{{ i }}">電壓 TR (V)</label>
-              <input type="number" id="load_voltage_tr_{{ i }}" name="load_voltage_tr_{{ i }}" step="0.1" placeholder="220.0">
+              <label for="load_voltage_st_{{ i }}">電壓 ST (V)</label>
+              <input type="number" id="load_voltage_st_{{ i }}" name="load_voltage_st_{{ i }}" step="0.1">
             </div>
           </div>
           
-          <!-- 更多加載數據字段... -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="load_voltage_tr_{{ i }}">電壓 TR (V)</label>
+              <input type="number" id="load_voltage_tr_{{ i }}" name="load_voltage_tr_{{ i }}" step="0.1">
+            </div>
+            
+            <div class="form-group">
+              <label for="load_current_r_{{ i }}">電流 R (A)</label>
+              <input type="number" id="load_current_r_{{ i }}" name="load_current_r_{{ i }}" step="0.1">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="load_current_s_{{ i }}">電流 S (A)</label>
+              <input type="number" id="load_current_s_{{ i }}" name="load_current_s_{{ i }}" step="0.1">
+            </div>
+            
+            <div class="form-group">
+              <label for="load_current_t_{{ i }}">電流 T (A)</label>
+              <input type="number" id="load_current_t_{{ i }}" name="load_current_t_{{ i }}" step="0.1">
+            </div>
+          </div>
         </fieldset>
         {% endfor %}
       </div>
       
-      <!-- 其他檢查項目... -->
+      <!-- 其他檢查 -->
+      <div class="form-section">
+        <h2>其他檢查</h2>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="oil_pressure_start">潤滑油壓力 開機後 (kg/cm2)</label>
+            <input type="number" id="oil_pressure_start" name="oil_pressure_start" step="0.1">
+          </div>
+          
+          <div class="form-group">
+            <label for="oil_pressure_20">潤滑油壓力 20分鐘後 (kg/cm2)</label>
+            <input type="number" id="oil_pressure_20" name="oil_pressure_20" step="0.1">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="water_in_in">內循環冷卻水溫（進）</label>
+            <input type="number" id="water_in_in" name="water_in_in" step="0.1">
+          </div>
+          
+          <div class="form-group">
+            <label for="water_in_out">內循環冷卻水溫（出）</label>
+            <input type="number" id="water_in_out" name="water_in_out" step="0.1">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="water_in_20">20分鐘後進水溫</label>
+            <input type="number" id="water_in_20" name="water_in_20" step="0.1">
+          </div>
+          
+          <div class="form-group">
+            <label for="water_out_20">20分鐘後出水溫</label>
+            <input type="number" id="water_out_20" name="water_out_20" step="0.1">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cooling_in_pressure">冷卻水塔水壓（入）</label>
+            <input type="number" id="cooling_in_pressure" name="cooling_in_pressure" step="0.1">
+          </div>
+          
+          <div class="form-group">
+            <label for="cooling_out_pressure">冷卻水塔水壓（出）</label>
+            <input type="number" id="cooling_out_pressure" name="cooling_out_pressure" step="0.1">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="noise">異常噪音</label>
+            <select id="noise" name="noise">
+              <option>無</option>
+              <option>有</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="hour_before">積時器 開機前</label>
+            <input type="number" id="hour_before" name="hour_before" step="0.1">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="hour_after">積時器 停機後</label>
+            <input type="number" id="hour_after" name="hour_after" step="0.1">
+          </div>
+          
+          <div class="form-group">
+            <label for="switch_position">啟動開關位置</label>
+            <select id="switch_position" name="switch_position">
+              <option>STOP</option>
+              <option>MANU</option>
+              <option>AUTO</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="auto_exhaust">發電機排煙機是否 AUTO</label>
+            <select id="auto_exhaust" name="auto_exhaust">
+              <option>是</option>
+              <option>否</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="oil_path">油路檢查</label>
+            <input type="text" id="oil_path" name="oil_path">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="omc">OMC</label>
+            <input type="text" id="omc" name="omc">
+          </div>
+          
+          <div class="form-group">
+            <label for="pmc">PMC</label>
+            <input type="text" id="pmc" name="pmc">
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fire_test">火災受信機測試</label>
+            <input type="text" id="fire_test" name="fire_test">
+          </div>
+          
+          <div class="form-group">
+            <label for="improvement">檢查異常之改善措施</label>
+            <input type="text" id="improvement" name="improvement">
+          </div>
+        </div>
+      </div>
     </form>
   </div>
   
   <button type="submit" class="btn-submit">✓ 產生測試報告</button>
 
   <script>
-    // 手機專用優化腳本
     document.addEventListener('DOMContentLoaded', function() {
       // 自動聚焦第一個輸入欄位
       const firstInput = document.querySelector('input, select');
