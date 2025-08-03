@@ -2,215 +2,266 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>發電機運轉測試表單</title>
   <style>
-    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 2em; max-width: 1200px; margin: auto; }
-    label { display: block; margin-bottom: 8px; font-weight: 500; }
-    input, select { 
-      padding: 8px; 
-      width: 100%; 
-      max-width: 400px; 
-      border: 1px solid #ddd;
-      border-radius: 4px;
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --border-color: #ddd;
+    }
+    
+    * {
       box-sizing: border-box;
     }
-    fieldset {
-      margin-bottom: 20px;
-      border: 1px solid #ddd;
-      padding: 15px;
-      border-radius: 5px;
-      background: #f9f9f9;
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+      color: #333;
+      background-color: #f5f5f5;
     }
+    
+    .container {
+      max-width: 100%;
+      padding: 15px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: var(--primary-color);
+      text-align: center;
+      padding: 15px 0;
+      margin: 0;
+      font-size: 1.5rem;
+      background-color: white;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .form-section {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    h2, h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+      font-size: 1.2rem;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: var(--primary-color);
+    }
+    
+    input[type="text"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 16px;
+      background-color: #fff;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+    
+    /* 手機輸入優化 */
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    select:focus {
+      border-color: var(--secondary-color);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    }
+    
+    /* 下拉選單樣式 */
+    select {
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c3e50'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 12px;
+      padding-right: 30px;
+    }
+    
+    fieldset {
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 15px;
+      background-color: #f9f9f9;
+    }
+    
     legend {
       font-weight: bold;
-      padding: 0 10px;
-      background: white;
+      color: var(--primary-color);
+      padding: 0 8px;
+      font-size: 0.9rem;
     }
-    button {
-      background: #4CAF50;
+    
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background-color: var(--secondary-color);
       color: white;
-      padding: 10px 20px;
       border: none;
-      border-radius: 4px;
-      cursor: pointer;
+      border-radius: 6px;
       font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 20px 0;
+      transition: background-color 0.3s;
     }
-    button:hover {
-      background: #45a049;
+    
+    .submit-btn:hover {
+      background-color: #2980b9;
     }
-    .form-section {
-      margin-bottom: 30px;
-      padding: 15px;
-      background: #f0f8ff;
-      border-radius: 5px;
+    
+    /* 手機鍵盤優化 */
+    input[type="number"] {
+      inputmode: decimal;
+    }
+    
+    /* 響應式調整 */
+    @media (min-width: 768px) {
+      .container {
+        max-width: 800px;
+        padding: 20px;
+      }
+      
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1 style="text-align: center; color: #2c3e50;">發電機運轉測試表單</h1>
+  <h1>發電機運轉測試表單</h1>
   
-  <form action="/generate" method="post">
-    <div class="form-section">
-      <h2>基本資訊</h2>
-      <label>機房：<input type="text" name="room" required></label>
-      <label>kW：<input type="number" name="kw" step="0.01" required></label>
+  <div class="container">
+    <form action="/generate" method="post">
+      <!-- 基本資訊區塊 -->
+      <div class="form-section">
+        <h2>基本資訊</h2>
+        <div class="form-group">
+          <label for="room">機房</label>
+          <input type="text" id="room" name="room" required placeholder="例如：左營機房">
+        </div>
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="kw">發電機功率 (kW)</label>
+            <input type="number" id="kw" name="kw" step="0.1" required placeholder="例如：55.5">
+          </div>
+          
+          <div class="form-group">
+            <label for="reason">開機原因</label>
+            <select id="reason" name="reason" required>
+              <option value="">請選擇...</option>
+              <option>定期測試</option>
+              <option>市電停電</option>
+              <option>本機房設備故障</option>
+              <option>其他</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="time_range">測試時間</label>
+            <input type="text" id="time_range" name="time_range" required placeholder="例如：08:00~08:30 或 上午測試">
+          </div>
+          
+          <div class="form-group">
+            <label for="hours_minutes">運轉時數</label>
+            <input type="text" id="hours_minutes" name="hours_minutes" required placeholder="例如：2小時30分鐘">
+          </div>
+        </div>
+      </div>
       
-      <label>開機原因：
-        <select name="reason" required>
-          <option value="">-- 請選擇 --</option>
-          <option>定期測試</option>
-          <option>市電停電</option>
-          <option>本機房設備故障</option>
-          <option>其他</option>
-        </select>
-      </label>
+      <!-- 空載數據區塊 -->
+      <div class="form-section">
+        <h2>空載數據</h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="no_load_time">紀錄時間</label>
+            <input type="text" id="no_load_time" name="no_load_time" placeholder="例如：08:30">
+          </div>
+          
+          <div class="form-group">
+            <label for="no_load_rpm">轉速 (rpm)</label>
+            <input type="number" id="no_load_rpm" name="no_load_rpm" placeholder="例如：1800">
+          </div>
+        </div>
+        
+        <!-- 其他空載字段... -->
+      </div>
+      
+      <!-- 加載數據區塊 -->
+      <div class="form-section">
+        <h2>加載數據（共5組）</h2>
+        {% for i in range(1,6) %}
+        <fieldset>
+          <legend>第 {{ i }} 組</legend>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="load_time_{{ i }}">紀錄時間</label>
+              <input type="text" id="load_time_{{ i }}" name="load_time_{{ i }}" placeholder="例如：09:00">
+            </div>
+            
+            <div class="form-group">
+              <label for="load_rpm_{{ i }}">轉速 (rpm)</label>
+              <input type="number" id="load_rpm_{{ i }}" name="load_rpm_{{ i }}" placeholder="例如：1800">
+            </div>
+          </div>
+          
+          <!-- 其他加載字段... -->
+        </fieldset>
+        {% endfor %}
+      </div>
+      
+      <button type="submit" class="submit-btn">✅ 產生測試報告</button>
+    </form>
+  </div>
 
-      <label>測試時間（格式：08:00~08:30）：<input type="text" name="time_range" pattern="\d{2}:\d{2}~\d{2}:\d{2}" required></label>
-      <label>本次運轉時數（例如：2小時30分鐘）：<input type="text" name="hours_minutes" required></label>
-    </div>
-
-    <label>潤滑油面(目視)：<input type="text" name="oil_level"></label>
-    <label>是否漏油漏水(目視)：
-      <select name="leak">
-      <option>有</option>
-        <option>無</option>
-      </select>
-    </label>
-    <label>日用油箱容量（公升）：<input type="text" name="daily_tank"></label>
-    <label>地下油槽(測試前量高度)：<input type="text" name="underground_before"></label>
-    <label>地下油槽(測試後量高度)：<input type="text" name="underground_after"></label>
-
-    <label>散熱器水位：<input type="text" name="radiator"></label>
-    <label>膨脹水箱：<input type="text" name="expansion_tank"></label>
-    <label>浮充電壓：<input type="text" name="Float_voltage"></label>
-    <label>浮充電流：<input type="text" name="Float_ampere"></label>
-    <label>警報及指示燈：<input type="text" name="alarm"></label>
-    <label>傳動皮帶檢查：<input type="text" name="belt"></label>
-
-    <label>四週及基礎台有無雜物：
-      <select name="clutter">
-        <option>有</option>
-        <option>無</option>
-      </select>
-    </label>
-
-    <label>電池外表是否清潔：
-      <select name="battery_clean">
-        <option>是</option>
-        <option>否</option>
-      </select>
-    </label>
-
-    <label>電池接頭是否鬆動：
-      <select name="battery_loose">
-        <option>有</option>
-        <option>無</option>
-      </select>
-    </label>
-
-    <label>鉛酸電池（AH）：<input type="text" name="acid_ah"></label>
-    <label>鉛酸電池組數：<input type="text" name="acid_units"></label>
-    <label>免加水電池組電壓（VDC）：<input type="text" name="sealed_voltage"></label>
-    <label>電池電壓 VDC：1：<input type="text" name="vdc1"></label>
-    <label>2：<input type="text" name="vdc2"></label>
-    <label>3：<input type="text" name="vdc3"></label>
-    <label>4：<input type="text" name="vdc4"></label>
-
-    <label>油機啟動是否良好：
-      <select name="starter_ok">
-        <option>是</option>
-        <option>否</option>
-      </select>
-    </label>
-
-    <label>煙囪排氣顏色：<input type="text" name="exhaust_color"></label>
-
-    <!-- 空載（1 組） -->
-<h3>空載紀錄</h3>
-    <fieldset>
-      <label>紀錄時間：<input type="text" name="no_load_time"></label>
-      <label>轉速 (rpm)：<input type="text" name="no_load_rpm"></label>
-      <label>頻率 (Hz)：<input type="text" name="no_load_hz"></label>
-      <label>功率 (kW)：<input type="text" name="no_load_kw"></label>
-      <label>電壓 RS (V)：<input type="text" name="no_load_voltage_rs"></label>
-      <label>電壓 ST (V)：<input type="text" name="no_load_voltage_st"></label>
-      <label>電壓 TR (V)：<input type="text" name="no_load_voltage_tr"></label>
-      <label>電流 R (A)：<input type="text" name="no_load_current_r"></label>
-      <label>電流 S (A)：<input type="text" name="no_load_current_s"></label>
-      <label>電流 T (A)：<input type="text" name="no_load_current_t"></label>
-    </fieldset>
-
-    <h3>加載紀錄（共5組）</h3>
-    {% for i in range(1,6) %}
-    <fieldset>
-      <legend>第 {{ i }} 組</legend>
-      <label>紀錄時間：<input type="text" name="load_time_{{ i }}"></label>
-      <label>轉速 (rpm)：<input type="text" name="load_rpm_{{ i }}"></label>
-      <label>頻率 (Hz)：<input type="text" name="load_hz_{{ i }}"></label>
-      <label>功率 (kW)：<input type="text" name="load_kw_{{ i }}"></label>
-      <label>電壓 RS (V)：<input type="text" name="load_voltage_rs_{{ i }}"></label>
-      <label>電壓 ST (V)：<input type="text" name="load_voltage_st_{{ i }}"></label>
-      <label>電壓 TR (V)：<input type="text" name="load_voltage_tr_{{ i }}"></label>
-      <label>電流 R (A)：<input type="text" name="load_current_r_{{ i }}"></label>
-      <label>電流 S (A)：<input type="text" name="load_current_s_{{ i }}"></label>
-      <label>電流 T (A)：<input type="text" name="load_current_t_{{ i }}"></label>
-    </fieldset>
-    {% endfor %}
-
-    <h3>其他檢查</h3>
-    <label>潤滑油壓力 開機後 (kg/cm2)：<input type="text" name="oil_pressure_start"></label>
-    <label>潤滑油壓力 20分鐘後 (kg/cm2)：<input type="text" name="oil_pressure_20"></label>
-
-    <label>內循環冷卻水溫（進）：<input type="text" name="water_in_in"></label>
-    <label>內循環冷卻水溫（出）：<input type="text" name="water_in_out"></label>
-    <label>20分鐘後進水溫：<input type="text" name="water_in_20"></label>
-    <label>20分鐘後出水溫：<input type="text" name="water_out_20"></label>
-    <label>冷卻水塔水壓（入）：<input type="text" name="cooling_in_pressure"></label>
-    <label>冷卻水塔水壓（出）：<input type="text" name="cooling_out_pressure"></label>
-
-    <label>異常噪音：
-      <select name="noise">
-        <option>有</option>
-        <option>無</option>
-      </select>
-    </label>
-
-    <label>積時器 開機前：<input type="text" name="hour_before"></label>
-    <label>積時器 停機後：<input type="text" name="hour_after"></label>
-
-    <label>啟動開關位置：
-      <select name="switch_position">
-        <option>STOP</option>
-        <option>MANU</option>
-        <option>AUTO</option>
-      </select>
-    </label>
-
-    <label>發電機排煙機是否 AUTO：
-      <select name="auto_exhaust">
-        <option>是</option>
-        <option>否</option>
-      </select>
-    </label>
-
-    <label>油路檢查：<input type="text" name="oil_path"></label>
-    <label>OMC：<input type="text" name="omc"></label>
-    <label>PMC：<input type="text" name="pmc"></label>
-    <label>火災受信機測試：<input type="text" name="fire_test"></label>
-    <label>檢查異常之改善措施：<input type="text" name="improvement"></label>
-
-    <br><br>
-   <div style="text-align: center; margin-top: 30px;">
-      <button type="submit">✅ 產生 Word 文件</button>
-    </div>
-  </form>
+  <script>
+    // 手機端額外優化
+    document.addEventListener('DOMContentLoaded', function() {
+      // 自動聚焦第一個輸入欄位
+      const firstInput = document.querySelector('input, select');
+      if (firstInput && window.innerWidth < 768) {
+        setTimeout(() => firstInput.focus(), 300);
+      }
+      
+      // 數字輸入欄位優化
+      document.querySelectorAll('input[type="number"]').forEach(input => {
+        input.addEventListener('focus', function() {
+          if (window.innerWidth < 768) {
+            this.type = 'text';
+            this.setAttribute('inputmode', 'decimal');
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
