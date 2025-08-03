@@ -4,29 +4,70 @@
   <meta charset="UTF-8">
   <title>發電機運轉測試表單</title>
   <style>
-    body { font-family: sans-serif; line-height: 1.8; padding: 2em; }
-    label { display: block; margin-bottom: 10px; }
-    input, select { padding: 4px; width: 90%; max-width: 400px; }
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 2em; max-width: 1200px; margin: auto; }
+    label { display: block; margin-bottom: 8px; font-weight: 500; }
+    input, select { 
+      padding: 8px; 
+      width: 100%; 
+      max-width: 400px; 
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    fieldset {
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 5px;
+      background: #f9f9f9;
+    }
+    legend {
+      font-weight: bold;
+      padding: 0 10px;
+      background: white;
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    .form-section {
+      margin-bottom: 30px;
+      padding: 15px;
+      background: #f0f8ff;
+      border-radius: 5px;
+    }
   </style>
 </head>
 <body>
-  <h1>發電機運轉測試表單</h1>
+  <h1 style="text-align: center; color: #2c3e50;">發電機運轉測試表單</h1>
+  
   <form action="/generate" method="post">
+    <div class="form-section">
+      <h2>基本資訊</h2>
+      <label>機房：<input type="text" name="room" required></label>
+      <label>kW：<input type="number" name="kw" step="0.01" required></label>
+      
+      <label>開機原因：
+        <select name="reason" required>
+          <option value="">-- 請選擇 --</option>
+          <option>定期測試</option>
+          <option>市電停電</option>
+          <option>本機房設備故障</option>
+          <option>其他</option>
+        </select>
+      </label>
 
-    <label>機房：<input type="text" name="room"></label>
-    <label>kW：<input type="text" name="kw"></label>
-
-    <label>開機原因：
-      <select name="reason">
-        <option>定期測試</option>
-        <option>市電停電</option>
-        <option>本機房設備故障</option>
-        <option>其他</option>
-      </select>
-    </label>
-
-    <label>測試時間（範例：08:00~08:30）：<input type="text" name="time_range"></label>
-    <label>本次運轉時數（例如：2小時30分鐘）：<input type="text" name="hours_minutes"></label>
+      <label>測試時間（格式：08:00~08:30）：<input type="text" name="time_range" pattern="\d{2}:\d{2}~\d{2}:\d{2}" required></label>
+      <label>本次運轉時數（例如：2小時30分鐘）：<input type="text" name="hours_minutes" required></label>
+    </div>
 
     <label>潤滑油面(目視)：<input type="text" name="oil_level"></label>
     <label>是否漏油漏水(目視)：
@@ -159,10 +200,13 @@
     <label>檢查異常之改善措施：<input type="text" name="improvement"></label>
 
     <br><br>
-    <button type="submit">✅ 產生 Word 文件</button>
+   <div style="text-align: center; margin-top: 30px;">
+      <button type="submit">✅ 產生 Word 文件</button>
+    </div>
   </form>
 </body>
 </html>
+
 
 
 
