@@ -16,11 +16,21 @@ def generate():
     doc = Document("templates/form_template.docx")
     form = request.form
 
+    # 替換段落中的佔位符
     for para in doc.paragraphs:
         for key in form:
             if f"{{{{{key}}}}}" in para.text:
                 para.text = para.text.replace(f"{{{{{key}}}}}", form[key])
 
+    # 新增：替換表格中的佔位符
+    for table in doc.tables:  # 遍歷所有表格
+        for row in table.rows:  # 遍歷所有行
+            for cell in row.cells:  # 遍歷所有儲存格
+                for key in form:
+                    if f"{{{{{key}}}}}" in cell.text:
+                        cell.text = cell.text.replace(f"{{{{{key}}}}}", form[key])
+
+    # 以下保持不變
     output_stream = io.BytesIO()
     doc.save(output_stream)
     output_stream.seek(0)
