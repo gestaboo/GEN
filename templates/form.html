@@ -1,23 +1,132 @@
-
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>發電機測試表單</title>
+  <meta charset="UTF-8">
+  <title>發電機運轉測試表單</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.8; padding: 2em; }
+    label { display: block; margin-bottom: 10px; }
+    input, select { padding: 4px; width: 90%; max-width: 400px; }
+  </style>
 </head>
 <body>
-    <h1>發電機測試表單</h1>
-    <form method="post" action="/generate">
-        機房：<input type="text" name="room"><br><br>
-        kW：<input type="text" name="kw"><br><br>
-        開機原因：
-        <select name="reason">
-            <option value="定期測試">定期測試</option>
-            <option value="市電停電">市電停電</option>
-            <option value="本機房設備故障">本機房設備故障</option>
-            <option value="其他">其他</option>
-        </select><br><br>
-        <input type="submit" value="產生 Word 檔">
-    </form>
+  <h1>發電機運轉測試表單</h1>
+  <form action="/generate" method="post">
+
+    <label>機房：<input type="text" name="room"></label>
+    <label>kW：<input type="text" name="kw"></label>
+
+    <label>開機原因：
+      <select name="reason">
+        <option>定期測試</option>
+        <option>市電停電</option>
+        <option>本機房設備故障</option>
+        <option>其他</option>
+      </select>
+    </label>
+
+    <label>測試時間（範例：08:00~08:30）：<input type="text" name="time_range"></label>
+    <label>本次運轉時數（例如：2小時30分鐘）：<input type="text" name="hours_minutes"></label>
+
+    <label>潤滑油面(目視)：<input type="text" name="oil_level"></label>
+    <label>是否漏油漏水(目視)：<input type="text" name="leak"></label>
+    <label>日用油箱容量（公升）：<input type="text" name="daily_tank"></label>
+    <label>地下油槽(測試前量高度)：<input type="text" name="underground_before"></label>
+    <label>地下油槽(測試後量高度)：<input type="text" name="underground_after"></label>
+
+    <label>散熱器水位：<input type="text" name="radiator"></label>
+    <label>膨脹水箱：<input type="text" name="expansion_tank"></label>
+    <label>警報及指示燈：<input type="text" name="alarm"></label>
+    <label>傳動皮帶檢查：<input type="text" name="belt"></label>
+
+    <label>四週及基礎台有無雜物：
+      <select name="clutter">
+        <option>有</option>
+        <option>無</option>
+      </select>
+    </label>
+
+    <label>電池外表是否清潔：
+      <select name="battery_clean">
+        <option>是</option>
+        <option>否</option>
+      </select>
+    </label>
+
+    <label>電池接頭是否鬆動：
+      <select name="battery_loose">
+        <option>有</option>
+        <option>無</option>
+      </select>
+    </label>
+
+    <label>鉛酸電池（AH）：<input type="text" name="acid_ah"></label>
+    <label>鉛酸電池組數：<input type="text" name="acid_units"></label>
+    <label>免加水電池組電壓（VDC）：<input type="text" name="sealed_voltage"></label>
+    <label>電池電壓 VDC：1：<input type="text" name="vdc1"></label>
+    <label>2：<input type="text" name="vdc2"></label>
+    <label>3：<input type="text" name="vdc3"></label>
+    <label>4：<input type="text" name="vdc4"></label>
+
+    <label>油機啟動是否良好：
+      <select name="starter_ok">
+        <option>是</option>
+        <option>否</option>
+      </select>
+    </label>
+
+    <label>煙囪排氣顏色：<input type="text" name="exhaust_color"></label>
+
+    <h3>空載/加載紀錄資料（每欄用空白或逗號分隔6組）</h3>
+    <label>紀錄時間（例如：08:00,08:05,08:10,...）：<input type="text" name="log_time"></label>
+    <label>轉速 (rpm)：<input type="text" name="rpm"></label>
+    <label>頻率 (Hz)：<input type="text" name="hz"></label>
+    <label>功率 (kW)：<input type="text" name="kw_data"></label>
+    <label>電壓 RS/ST/TR：<input type="text" name="voltage"></label>
+    <label>電流 R/S/T：<input type="text" name="current"></label>
+
+    <h3>其他檢查</h3>
+    <label>潤滑油壓力 開機後 (kg/cm2)：<input type="text" name="oil_pressure_start"></label>
+    <label>潤滑油壓力 20分鐘後 (kg/cm2)：<input type="text" name="oil_pressure_20"></label>
+
+    <label>內循環冷卻水溫（進/出）：<input type="text" name="water_in_out"></label>
+    <label>20分鐘後進/出水溫：<input type="text" name="water_in_out_20"></label>
+
+    <label>冷卻水塔水壓（入/出）：<input type="text" name="cooling_pressure"></label>
+
+    <label>異常噪音：
+      <select name="noise">
+        <option>有</option>
+        <option>無</option>
+      </select>
+    </label>
+
+    <label>積時器 開機前：<input type="text" name="hour_before"></label>
+    <label>積時器 停機後：<input type="text" name="hour_after"></label>
+
+    <label>啟動開關位置：
+      <select name="switch_position">
+        <option>STOP</option>
+        <option>MANU</option>
+        <option>AUTO</option>
+      </select>
+    </label>
+
+    <label>發電機排煙機是否 AUTO：
+      <select name="auto_exhaust">
+        <option>是</option>
+        <option>否</option>
+      </select>
+    </label>
+
+    <label>油路檢查：<input type="text" name="oil_path"></label>
+    <label>OMC：<input type="text" name="omc"></label>
+    <label>PMC：<input type="text" name="pmc"></label>
+    <label>火災受信機測試：<input type="text" name="fire_test"></label>
+    <label>檢查異常之改善措施：<input type="text" name="improvement"></label>
+
+    <br><br>
+    <button type="submit">✅ 產生 Word 文件</button>
+  </form>
 </body>
 </html>
