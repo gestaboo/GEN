@@ -1,60 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>發電機運轉測試表單</title>
   <style>
     :root {
-      --primary-color: #2c3e50;
-      --secondary-color: #3498db;
-      --border-color: #ddd;
+      --primary: #2c3e50;
+      --secondary: #3498db;
+      --success: #27ae60;
+      --border: #e0e0e0;
+      --background: #f8f9fa;
+      --card-bg: #ffffff;
     }
     
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
     
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", sans-serif;
       line-height: 1.6;
-      padding: 0;
-      margin: 0;
-      color: #333;
-      background-color: #f5f5f5;
+      color: var(--primary);
+      background-color: var(--background);
+      -webkit-text-size-adjust: 100%;
+      padding-bottom: 80px;
     }
     
     .container {
       max-width: 100%;
-      padding: 15px;
-      margin: 0 auto;
+      padding: 0;
     }
     
-    h1 {
-      color: var(--primary-color);
-      text-align: center;
-      padding: 15px 0;
-      margin: 0;
-      font-size: 1.5rem;
-      background-color: white;
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 15px;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     
+    h1 {
+      font-size: 1.3rem;
+      text-align: center;
+      font-weight: 500;
+    }
+    
     .form-section {
-      background: white;
-      border-radius: 8px;
+      background-color: var(--card-bg);
+      border-radius: 10px;
       padding: 15px;
-      margin-bottom: 15px;
+      margin: 15px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     
     h2, h3 {
-      color: var(--primary-color);
-      margin-top: 0;
-      font-size: 1.2rem;
+      color: var(--primary);
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
     }
     
     .form-group {
@@ -63,120 +72,138 @@
     
     label {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+      color: var(--primary);
       font-weight: 500;
-      color: var(--primary-color);
     }
     
     input[type="text"],
     input[type="number"],
     select {
       width: 100%;
-      padding: 12px;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      font-size: 16px;
-      background-color: #fff;
+      padding: 12px 15px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      background-color: white;
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
+      min-height: 48px;
     }
     
     /* 手機輸入優化 */
-    input[type="text"]:focus,
-    input[type="number"]:focus,
+    input:focus,
     select:focus {
-      border-color: var(--secondary-color);
+      border-color: var(--secondary);
       outline: none;
-      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+    
+    /* 數字輸入專用 */
+    input[type="number"] {
+      inputmode: decimal;
     }
     
     /* 下拉選單樣式 */
     select {
       background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232c3e50'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
       background-repeat: no-repeat;
-      background-position: right 10px center;
-      background-size: 12px;
-      padding-right: 30px;
+      background-position: right 15px center;
+      background-size: 14px;
+      padding-right: 40px;
     }
     
     fieldset {
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
       margin-bottom: 15px;
-      background-color: #f9f9f9;
+      background-color: var(--card-bg);
     }
     
     legend {
       font-weight: bold;
-      color: var(--primary-color);
+      color: var(--primary);
+      font-size: 0.95rem;
       padding: 0 8px;
-      font-size: 0.9rem;
+      background-color: var(--card-bg);
     }
     
-    .submit-btn {
-      display: block;
-      width: 100%;
-      padding: 14px;
-      background-color: var(--secondary-color);
+    .btn-submit {
+      position: fixed;
+      bottom: 15px;
+      left: 15px;
+      right: 15px;
+      background-color: var(--success);
       color: white;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 8px;
+      padding: 15px;
+      font-size: 1.1rem;
       font-weight: bold;
       cursor: pointer;
-      margin: 20px 0;
-      transition: background-color 0.3s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 50;
     }
     
-    .submit-btn:hover {
-      background-color: #2980b9;
+    .btn-submit:active {
+      background-color: #219653;
+      transform: scale(0.98);
     }
     
-    /* 手機鍵盤優化 */
-    input[type="number"] {
-      inputmode: decimal;
-    }
-    
-    /* 響應式調整 */
-    @media (min-width: 768px) {
-      .container {
-        max-width: 800px;
-        padding: 20px;
+    /* 手機橫屏適應 */
+    @media screen and (min-width: 500px) {
+      .form-section {
+        margin: 15px auto;
+        max-width: 500px;
       }
-      
-      .form-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+    }
+    
+    /* 避免iOS縮放 */
+    @media screen and (max-width: 360px) {
+      input, select {
+        font-size: 16px !important;
       }
+    }
+    
+    /* 分組樣式 */
+    .form-row {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .form-row .form-group {
+      flex: 1;
     }
   </style>
 </head>
 <body>
-  <h1>發電機運轉測試表單</h1>
+  <header>
+    <h1>發電機運轉測試表單</h1>
+  </header>
   
   <div class="container">
     <form action="/generate" method="post">
-      <!-- 基本資訊區塊 -->
+      <!-- 基本資訊 -->
       <div class="form-section">
         <h2>基本資訊</h2>
         <div class="form-group">
-          <label for="room">機房</label>
-          <input type="text" id="room" name="room" required placeholder="例如：左營機房">
+          <label for="room">機房名稱</label>
+          <input type="text" id="room" name="room" required placeholder="請輸入機房名稱">
         </div>
         
-        <div class="form-grid">
+        <div class="form-row">
           <div class="form-group">
             <label for="kw">發電機功率 (kW)</label>
-            <input type="number" id="kw" name="kw" step="0.1" required placeholder="例如：55.5">
+            <input type="number" id="kw" name="kw" step="0.1" required placeholder="55.5" inputmode="decimal">
           </div>
           
           <div class="form-group">
             <label for="reason">開機原因</label>
             <select id="reason" name="reason" required>
-              <option value="">請選擇...</option>
+              <option value="">請選擇</option>
               <option>定期測試</option>
               <option>市電停電</option>
               <option>本機房設備故障</option>
@@ -185,80 +212,155 @@
           </div>
         </div>
         
-        <div class="form-grid">
+        <div class="form-row">
           <div class="form-group">
             <label for="time_range">測試時間</label>
-            <input type="text" id="time_range" name="time_range" required placeholder="例如：08:00~08:30 或 上午測試">
+            <input type="text" id="time_range" name="time_range" required placeholder="08:00~08:30">
           </div>
           
           <div class="form-group">
             <label for="hours_minutes">運轉時數</label>
-            <input type="text" id="hours_minutes" name="hours_minutes" required placeholder="例如：2小時30分鐘">
+            <input type="text" id="hours_minutes" name="hours_minutes" required placeholder="2小時30分鐘">
           </div>
         </div>
       </div>
       
-      <!-- 空載數據區塊 -->
+      <!-- 檢查項目 -->
       <div class="form-section">
-        <h2>空載數據</h2>
-        <div class="form-grid">
+        <h2>基本檢查</h2>
+        
+        <div class="form-row">
           <div class="form-group">
-            <label for="no_load_time">紀錄時間</label>
-            <input type="text" id="no_load_time" name="no_load_time" placeholder="例如：08:30">
+            <label for="oil_level">潤滑油面</label>
+            <input type="text" id="oil_level" name="oil_level" placeholder="目視檢查">
           </div>
           
           <div class="form-group">
-            <label for="no_load_rpm">轉速 (rpm)</label>
-            <input type="number" id="no_load_rpm" name="no_load_rpm" placeholder="例如：1800">
+            <label for="leak">漏油漏水</label>
+            <select id="leak" name="leak">
+              <option>無</option>
+              <option>有</option>
+            </select>
           </div>
         </div>
         
-        <!-- 其他空載字段... -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="daily_tank">日用油箱 (公升)</label>
+            <input type="number" id="daily_tank" name="daily_tank" placeholder="36">
+          </div>
+          
+          <div class="form-group">
+            <label for="radiator">散熱器水位</label>
+            <input type="text" id="radiator" name="radiator" placeholder="正常">
+          </div>
+        </div>
+        
+        <!-- 更多檢查項目... -->
       </div>
       
-      <!-- 加載數據區塊 -->
+      <!-- 空載數據 -->
       <div class="form-section">
-        <h2>加載數據（共5組）</h2>
+        <h2>空載數據</h2>
+        <fieldset>
+          <legend>空載紀錄</legend>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="no_load_time">紀錄時間</label>
+              <input type="text" id="no_load_time" name="no_load_time" placeholder="08:30">
+            </div>
+            
+            <div class="form-group">
+              <label for="no_load_rpm">轉速 (rpm)</label>
+              <input type="number" id="no_load_rpm" name="no_load_rpm" placeholder="1800">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="no_load_hz">頻率 (Hz)</label>
+              <input type="number" id="no_load_hz" name="no_load_hz" placeholder="60">
+            </div>
+            
+            <div class="form-group">
+              <label for="no_load_kw">功率 (kW)</label>
+              <input type="number" id="no_load_kw" name="no_load_kw" step="0.1" placeholder="5.5">
+            </div>
+          </div>
+          
+          <!-- 電壓電流數據... -->
+        </fieldset>
+      </div>
+      
+      <!-- 加載數據 (5組) -->
+      <div class="form-section">
+        <h2>加載數據</h2>
         {% for i in range(1,6) %}
         <fieldset>
-          <legend>第 {{ i }} 組</legend>
-          <div class="form-grid">
+          <legend>第 {{ i }} 組數據</legend>
+          
+          <div class="form-row">
             <div class="form-group">
               <label for="load_time_{{ i }}">紀錄時間</label>
-              <input type="text" id="load_time_{{ i }}" name="load_time_{{ i }}" placeholder="例如：09:00">
+              <input type="text" id="load_time_{{ i }}" name="load_time_{{ i }}" placeholder="09:00">
             </div>
             
             <div class="form-group">
               <label for="load_rpm_{{ i }}">轉速 (rpm)</label>
-              <input type="number" id="load_rpm_{{ i }}" name="load_rpm_{{ i }}" placeholder="例如：1800">
+              <input type="number" id="load_rpm_{{ i }}" name="load_rpm_{{ i }}" placeholder="1800">
             </div>
           </div>
           
-          <!-- 其他加載字段... -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="load_voltage_rs_{{ i }}">電壓 RS (V)</label>
+              <input type="number" id="load_voltage_rs_{{ i }}" name="load_voltage_rs_{{ i }}" step="0.1" placeholder="220.0">
+            </div>
+            
+            <div class="form-group">
+              <label for="load_voltage_tr_{{ i }}">電壓 TR (V)</label>
+              <input type="number" id="load_voltage_tr_{{ i }}" name="load_voltage_tr_{{ i }}" step="0.1" placeholder="220.0">
+            </div>
+          </div>
+          
+          <!-- 更多加載數據字段... -->
         </fieldset>
         {% endfor %}
       </div>
       
-      <button type="submit" class="submit-btn">✅ 產生測試報告</button>
+      <!-- 其他檢查項目... -->
     </form>
   </div>
+  
+  <button type="submit" class="btn-submit">✓ 產生測試報告</button>
 
   <script>
-    // 手機端額外優化
+    // 手機專用優化腳本
     document.addEventListener('DOMContentLoaded', function() {
       // 自動聚焦第一個輸入欄位
       const firstInput = document.querySelector('input, select');
-      if (firstInput && window.innerWidth < 768) {
+      if (firstInput) {
         setTimeout(() => firstInput.focus(), 300);
       }
       
-      // 數字輸入欄位優化
-      document.querySelectorAll('input[type="number"]').forEach(input => {
+      // 防止表單提交後按鈕保持按下狀態
+      const form = document.querySelector('form');
+      const submitBtn = document.querySelector('.btn-submit');
+      
+      if (form && submitBtn) {
+        submitBtn.addEventListener('click', function() {
+          form.submit();
+          this.blur();
+        });
+      }
+      
+      // 數字輸入優化
+      const numberInputs = document.querySelectorAll('input[type="number"]');
+      numberInputs.forEach(input => {
         input.addEventListener('focus', function() {
-          if (window.innerWidth < 768) {
-            this.type = 'text';
-            this.setAttribute('inputmode', 'decimal');
-          }
+          this.type = 'text';
+          this.setAttribute('inputmode', 'decimal');
         });
       });
     });
