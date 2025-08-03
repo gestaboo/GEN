@@ -21,38 +21,73 @@ def generate_doc():
         doc = Document("templates/form_template.docx")
         form_data = request.form
 
-        # 除錯：印出接收到的表單數據
-        app.logger.debug(f"收到的表單數據: {form_data}")
-
-        # 處理所有可能的佔位符變體
+        # 準備替換字典
         replacements = {}
+        
+        # 1. 處理基本字段
         for key, value in form_data.items():
-            clean_key = re.sub(r'[\\_{}\s]', '', key)  # 徹底清理鍵名
-            replacements[f"{{{{{clean_key}}}}}"] = value
-            replacements[f"{{{{{key}}}}}"] = value  # 保留原始格式
+            if value:  # 只處理有值的字段
+                clean_key = re.sub(r'[\\_{}\s]', '', key)
+                replacements[f"{{{{{clean_key}}}}}"] = value
+                replacements[f"{{{{{key}}}}}"] = value
 
-        # 特別處理加載數據
+        # 2. 特殊處理空載數據
+        no_load_fields = ['time', 'rpm', 'hz', 'kw', 'voltage_rs', 'voltage_st', 
+                         'voltage_tr', 'current_r', 'current_s', 'current_t']
+        for field in no_load_fields:
+            placeholder = f"{{{{no_load_{field}}}}}"
+            replacements[placeholder] = form_data.get(f"no_load_{field}", "")
+
+        # 3. 處理加載數據 (1-5組)
         for i in range(1, 6):
-            for field in ['time', 'rpm', 'hz', 'kw', 'voltage_rs', 'voltage_st', 'voltage_tr', 'current_r', 'current_s', 'current_t']:
+            for field in ['time', 'rpm', 'hz', 'kw', 'voltage_rs', 'voltage_st', 
+                         'voltage_tr', 'current_r', 'current_s', 'current_t']:
                 placeholder = f"{{{{load_{field}_{i}}}}}"
                 replacements[placeholder] = form_data.get(f"load_{field}_{i}", "")
 
-        # 執行文檔替換
+        # 4. 處理反斜線變體
+        additional_ph = {}
+        for ph, val in replacements.items():
+            if '_' in ph:
+                new_ph = ph.replace('_', r'\_')
+                additional_ph[new_ph] = val
+        replacements.update(additional_ph)
+
+        # 執行替換（段落+表格）
+        for para in doc.paragraphs:
+            para_text = para.text
+            for ph, val in replacements.items():
+                para_text = para_text.replace(ph, val)
+            para.text = para_text
+            
+            for run in para.runs:
+                run_text = run.text
+                for ph, val in replacements.items():
+                    run_text = run_text.replace(ph, val)
+                run.text = run_text
+
         for table in doc.tables:
             for row in table.rows:
                 for cell in row.cells:
-                    # 先處理整個單元格
                     cell_text = cell.text
                     for ph, val in replacements.items():
                         cell_text = cell_text.replace(ph, val)
                     cell.text = cell_text
                     
-                    # 再處理段落保留格式
                     for para in cell.paragraphs:
                         para_text = para.text
                         for ph, val in replacements.items():
                             para_text = para_text.replace(ph, val)
                         para.text = para_text
+
+        # 清理未替換的佔位符
+        clean_pattern = re.compile(r'\{\{[^}]*\}\}')
+        for para in doc.paragraphs:
+            para.text = clean_pattern.sub('', para.text)
+        for table in doc.tables:
+            for row in table.rows:
+                for cell in row.cells:
+                    cell.text = clean_pattern.sub('', cell.text)
 
         # 生成文件
         output_stream = io.BytesIO()
