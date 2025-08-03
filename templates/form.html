@@ -86,36 +86,35 @@
 
     <!-- 空載（1 組） -->
 <h3>空載紀錄</h3>
-<fieldset>
-  <label>紀錄時間：<input type="text" name="no_load_time"></label>
-  <label>轉速 (rpm)：<input type="text" name="no_load_rpm"></label>
-  <label>頻率 (Hz)：<input type="text" name="no_load_hz"></label>
-  <label>功率 (kW)：<input type="text" name="no_load_kw"></label>
-  <label>電壓 RS (V)：<input type="text" name="no_load_voltage_rs"></label>
-  <label>電壓 ST (V)：<input type="text" name="no_load_voltage_st"></label>
-  <label>電壓 TR (V)：<input type="text" name="no_load_voltage_tr"></label>
-  <label>電流 R (A)：<input type="text" name="no_load_current_r"></label>
-  <label>電流 S (A)：<input type="text" name="no_load_current_s"></label>
-  <label>電流 T (A)：<input type="text" name="no_load_current_t"></label>
-</fieldset>
+    <fieldset>
+      <label>紀錄時間：<input type="text" name="no_load_time"></label>
+      <label>轉速 (rpm)：<input type="text" name="no_load_rpm"></label>
+      <label>頻率 (Hz)：<input type="text" name="no_load_hz"></label>
+      <label>功率 (kW)：<input type="text" name="no_load_kw"></label>
+      <label>電壓 RS (V)：<input type="text" name="no_load_voltage_rs"></label>
+      <label>電壓 ST (V)：<input type="text" name="no_load_voltage_st"></label>
+      <label>電壓 TR (V)：<input type="text" name="no_load_voltage_tr"></label>
+      <label>電流 R (A)：<input type="text" name="no_load_current_r"></label>
+      <label>電流 S (A)：<input type="text" name="no_load_current_s"></label>
+      <label>電流 T (A)：<input type="text" name="no_load_current_t"></label>
+    </fieldset>
 
-<!-- 加載（5 組） -->
-<h3>加載紀錄（共 5 組）</h3>
-<% for i in range(1, 6): %>
-  <fieldset>
-    <legend>第 <%= i %> 組</legend>
-    <label>紀錄時間：<input type="text" name="load_time_<%= i %>"></label>
-    <label>轉速 (rpm)：<input type="text" name="load_rpm_<%= i %>"></label>
-    <label>頻率 (Hz)：<input type="text" name="load_hz_<%= i %>"></label>
-    <label>功率 (kW)：<input type="text" name="load_kw_<%= i %>"></label>
-    <label>電壓 RS (V)：<input type="text" name="load_voltage_rs_<%= i %>"></label>
-    <label>電壓 ST (V)：<input type="text" name="load_voltage_st_<%= i %>"></label>
-    <label>電壓 TR (V)：<input type="text" name="load_voltage_tr_<%= i %>"></label>
-    <label>電流 R (A)：<input type="text" name="load_current_r_<%= i %>"></label>
-    <label>電流 S (A)：<input type="text" name="load_current_s_<%= i %>"></label>
-    <label>電流 T (A)：<input type="text" name="load_current_t_<%= i %>"></label>
-  </fieldset>
-<% endfor %>
+    <h3>加載紀錄（共5組）</h3>
+    {% for i in range(1,6) %}
+    <fieldset>
+      <legend>第 {{ i }} 組</legend>
+      <label>紀錄時間：<input type="text" name="load_time_{{ i }}"></label>
+      <label>轉速 (rpm)：<input type="text" name="load_rpm_{{ i }}"></label>
+      <label>頻率 (Hz)：<input type="text" name="load_hz_{{ i }}"></label>
+      <label>功率 (kW)：<input type="text" name="load_kw_{{ i }}"></label>
+      <label>電壓 RS (V)：<input type="text" name="load_voltage_rs_{{ i }}"></label>
+      <label>電壓 ST (V)：<input type="text" name="load_voltage_st_{{ i }}"></label>
+      <label>電壓 TR (V)：<input type="text" name="load_voltage_tr_{{ i }}"></label>
+      <label>電流 R (A)：<input type="text" name="load_current_r_{{ i }}"></label>
+      <label>電流 S (A)：<input type="text" name="load_current_s_{{ i }}"></label>
+      <label>電流 T (A)：<input type="text" name="load_current_t_{{ i }}"></label>
+    </fieldset>
+    {% endfor %}
 
     <h3>其他檢查</h3>
     <label>潤滑油壓力 開機後 (kg/cm2)：<input type="text" name="oil_pressure_start"></label>
@@ -164,6 +163,7 @@
   </form>
 </body>
 </html>
+
 
 
 
