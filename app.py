@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, send_file
 from docx import Document
 import io
@@ -16,21 +15,46 @@ def generate():
     doc = Document("templates/form_template.docx")
     form = request.form
 
-    # 替換段落中的佔位符
+    # --- 1. 先處理一般單值欄位（包括空載數據）---
     for para in doc.paragraphs:
         for key in form:
             if f"{{{{{key}}}}}" in para.text:
                 para.text = para.text.replace(f"{{{{{key}}}}}", form[key])
 
-    # 新增：替換表格中的佔位符
-    for table in doc.tables:  # 遍歷所有表格
-        for row in table.rows:  # 遍歷所有行
-            for cell in row.cells:  # 遍歷所有儲存格
-                for key in form:
-                    if f"{{{{{key}}}}}" in cell.text:
-                        cell.text = cell.text.replace(f"{{{{{key}}}}}", form[key])
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                for paragraph in cell.paragraphs:
+                    for key in form:
+                        if f"{{{{{key}}}}}" in paragraph.text:
+                            paragraph.text = paragraph.text.replace(f"{{{{{key}}}}}", form[key])
 
-    # 以下保持不變
+    # --- 2. 特別處理加載的5組數據 ---
+    # 加載數據的欄位前綴
+    load_fields = ['time', 'rpm', 'hz', 'kw', 'voltage_rs', 'voltage_st', 
+                  'voltage_tr', 'current_r', 'current_s', 'current_t']
+    
+    # 處理每組加載數據 (1~5組)
+    for group_num in range(1, 6):
+        for field in load_fields:
+            form_key = f"load_{field}_{group_num}"
+            placeholder = f"{{{{load_{field}_{group_num}}}}}"
+            replacement = form.get(form_key, "")
+            
+            # 在段落中替換
+            for para in doc.paragraphs:
+                if placeholder in para.text:
+                    para.text = para.text.replace(placeholder, replacement)
+            
+            # 在表格中替換
+            for table in doc.tables:
+                for row in table.rows:
+                    for cell in row.cells:
+                        for paragraph in cell.paragraphs:
+                            if placeholder in paragraph.text:
+                                paragraph.text = paragraph.text.replace(placeholder, replacement)
+
+    # --- 3. 生成最終文件 ---
     output_stream = io.BytesIO()
     doc.save(output_stream)
     output_stream.seek(0)
