@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -628,7 +629,36 @@
       </div>
     </form>
   </div>
-  
+  <div class="form-section">
+        <h2>附件4 - 測試前/後檢查表</h2>
+        
+        <div class="form-group">
+          <label for="check_before_notify_units">測試前是否知會整棟機房各相關單位</label>
+          <input type="text" id="check_before_notify_units" name="check_before_notify_units" placeholder="列舉相關單位及測試日期時間">
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="omc">OMC</label>
+            <input type="text" id="omc" name="omc">
+          </div>
+          
+          <div class="form-group">
+            <label for="pmc">PMC</label>
+            <input type="text" id="pmc" name="pmc">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="check_before_battery_status">測試前確認各SMR、UPS之蓄電池組功能正常</label>
+          <input type="text" id="check_before_battery_status" name="check_before_battery_status" placeholder="列舉各SMR、UPS蓄電池組及確認上月測試狀況">
+        </div>
+        
+        <div class="form-group">
+          <label for="check_after_battery_discharge">測試後檢查各SMR、UPS之蓄電池組放電特性</label>
+          <input type="text" id="check_after_battery_discharge" name="check_after_battery_discharge" placeholder="比較各組電池放電電壓、電流是否異常">
+        </div>
+      </div>
   <button type="submit" class="btn-submit">✓ 產生測試報告</button>
 
   <script>
