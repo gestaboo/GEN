@@ -691,6 +691,31 @@
       });
     });
   </script>
+	<script>
+  window.addEventListener("load", function () {
+    const form = document.querySelector("form");
+    const inputs = form.querySelectorAll("input, select, textarea");
+
+    // 載入儲存的資料
+    inputs.forEach(input => {
+      const saved = localStorage.getItem(input.name);
+      if (saved !== null) {
+        input.value = saved;
+      }
+
+      // 即時儲存變更
+      input.addEventListener("input", () => {
+        localStorage.setItem(input.name, input.value);
+      });
+    });
+
+    // 送出後清除暫存
+    form.addEventListener("submit", () => {
+      inputs.forEach(input => localStorage.removeItem(input.name));
+    });
+  });
+</script>
 </body>
 </html>
+
 
