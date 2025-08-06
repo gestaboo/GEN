@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -661,6 +662,7 @@
   </div>
   
   <button type="submit" class="btn-submit">✓ 產生測試報告</button>
+  <button type="button" id="clearDraft">🗑️ 清除表單內容</button>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -714,6 +716,18 @@
       inputs.forEach(input => localStorage.removeItem(input.name));
     });
   });
+</script>
+<script>
+const clearBtn = document.getElementById("clearDraft");
+if (clearBtn) {
+  clearBtn.addEventListener("click", () => {
+    const inputs = document.querySelectorAll("input, textarea, select");
+    inputs.forEach((input) => {
+      localStorage.removeItem("field_" + input.name);
+      input.value = "";
+    });
+  });
+}
 </script>
 </body>
 </html>
