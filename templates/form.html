@@ -249,7 +249,12 @@
           <label for="underground_after">地下油槽(測試後量高度)</label>
           <input type="number" id="underground_after" name="underground_after">
         </div>
-        
+		
+        <div class="form-group row">
+          <label for="overflow_alarm_test">日用油箱溢油告警測試：</label>
+          <input type="text" id="overflow_alarm_test" name="overflow_alarm_test">
+        </div>
+		
         <div class="form-row">
           <div class="form-group">
             <label for="radiator">散熱器水位</label>
@@ -351,7 +356,46 @@
             <input type="number" id="vdc4" name="vdc4" step="0.1">
           </div>
         </div>
-        
+		
+        <h3>電池內阻檢查</h3>
+<div class="form-row">
+  <div class="form-group">
+    <label for="battery_resistance_1">1</label>
+    <select id="battery_resistance_1" name="battery_resistance_1">
+      <option value="">-</option>
+      <option value="良">良</option>
+      <option value="不良">不良</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="battery_resistance_2">2</label>
+    <select id="battery_resistance_2" name="battery_resistance_2">
+      <option value="">-</option>
+      <option value="良">良</option>
+      <option value="不良">不良</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="battery_resistance_3">3</label>
+    <select id="battery_resistance_3" name="battery_resistance_3">
+      <option value="">-</option>
+      <option value="良">良</option>
+      <option value="不良">不良</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label for="battery_resistance_4">4</label>
+    <select id="battery_resistance_4" name="battery_resistance_4">
+      <option value="">-</option>
+      <option value="良">良</option>
+      <option value="不良">不良</option>
+    </select>
+  </div>
+</div>
+		
         <div class="form-row">
           <div class="form-group">
             <label for="starter_ok">油機啟動是否良好</label>
@@ -512,27 +556,28 @@
         
         <div class="form-row">
           <div class="form-group">
-            <label for="oil_pressure_start">潤滑油壓力 開機後 (kg/cm2)</label>
+            <label for="oil_pressure_start">潤滑油壓力 開機後 (kg/cm2或Psi)</label>
             <input type="number" id="oil_pressure_start" name="oil_pressure_start" step="0.1">
           </div>
           
           <div class="form-group">
-            <label for="oil_pressure_20">潤滑油壓力 20分鐘後 (kg/cm2)</label>
+            <label for="oil_pressure_20">潤滑油壓力 20分鐘後 (kg/cm2或Psi)</label>
             <input type="number" id="oil_pressure_20" name="oil_pressure_20" step="0.1">
           </div>
         </div>
         
         <div class="form-row">
           <div class="form-group">
-            <label for="water_in_in">內循環冷卻水溫（進）</label>
+            <label for="water_in_in">內循環冷卻水溫(最高水溫)(℃)</label>
             <input type="number" id="water_in_in" name="water_in_in" step="0.1">
           </div>
           
-          <div class="form-group">
-            <label for="water_in_out">內循環冷卻水溫（出）</label>
-            <input type="number" id="water_in_out" name="water_in_out" step="0.1">
-          </div>
-        </div>
+          <input type="hidden" name="water_in_out" value="">
+    <div class="form-group" style="visibility: hidden; height: 0; margin: 0; padding: 0;">
+      <label aria-hidden="true"></label>
+      <div style="height: 48px;"></div>
+    </div>
+  </div>
         
         <div class="form-row">
           <div class="form-group">
@@ -718,16 +763,24 @@
   });
 </script>
 <script>
-const clearBtn = document.getElementById("clearDraft");
-if (clearBtn) {
-  clearBtn.addEventListener("click", () => {
-    const inputs = document.querySelectorAll("input, textarea, select");
-    inputs.forEach((input) => {
-      localStorage.removeItem("field_" + input.name);
-      input.value = "";
-    });
+// 修正後的清除功能 (完全取代舊程式碼)
+document.getElementById("clearDraft")?.addEventListener("click", () => {
+  // 1. 清除所有 localStorage 資料
+  document.querySelectorAll("input, select, textarea").forEach(input => {
+    localStorage.removeItem(input.name);    // 新版本 key
+    localStorage.removeItem("field_" + input.name); // 舊版本 key
   });
-}
+  
+  // 2. 重設整個表單
+  document.querySelector("form").reset();
+  
+  // 3. 清除可能殘留的額外儲存
+  localStorage.removeItem("formDraft");
+  
+  // 4. 視覺反饋 (可選)
+  alert("表單已徹底清除完成");
+  // 或改用 console.log("表單已清除"); 避免彈窗干擾
+});
 </script>
 </body>
 </html>
